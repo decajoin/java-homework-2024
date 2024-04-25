@@ -102,11 +102,60 @@ class Player {
 	    System.out.println();
 	}
 
-	// 判断玩家是否具有出牌资格
-	public boolean hasValidMove() {
-	    // 实现判断出牌资格的逻辑
-	    return false; // 这里需要根据游戏规则实现具体逻辑
+	public boolean isTheCardCleared() {
+		return cards.isEmpty();
 	}
+	// 判断玩家是否具有出牌资格
+	public boolean hasValidMove(boolean[] propriety) {
+	    // 如果玩家手中没有牌了，不能出牌
+	    if (cards.isEmpty()) {
+	        return false;
+	    }
+	    
+	    // 如果是首次出牌，可以随意出牌
+	    // 在游戏开始或者上一轮出牌的玩家出完牌后，都算是首次出牌
+	    // 这里假设 propriety 数组记录了每个玩家的出牌优先权，可以根据情况修改条件
+	    if (propriety[playerId - 1]) {
+	        return true;
+	    }
+	    
+	    // 其他情况根据游戏规则判断是否满足出牌规则，比如是否能出同花色的牌
+	    // 这里假设游戏规则是只能出同花色的牌，关于手上的牌能否出，应该交给出牌函数处理
+	    
+	    return false;
+	}
+}
+
+class PlayPork {
+    private ArrayList<Card> cards;
+    private Player[] players;
+    private boolean[] propriety;
+
+    public PlayPork() {
+        // 初始化牌、玩家等
+        
+        // 初始化 propriety 数组
+        propriety = new boolean[players.length];
+        int firstPlayerIndex = new Random().nextInt(players.length);
+        propriety[firstPlayerIndex] = true;
+    }
+
+    // 其他方法...
+
+    // 更新出牌优先权
+    public void updatePropriety(int currentPlayerIndex) {
+        // 将上一轮出牌的玩家的出牌优先权设为 false
+        propriety[currentPlayerIndex] = false;
+        
+        // 找到下一轮应该出牌的玩家的索引
+        int nextPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        while (!players[nextPlayerIndex].hasValidMove(propriety)) {
+            nextPlayerIndex = (nextPlayerIndex + 1) % players.length;
+        }
+        
+        // 更新下一轮出牌的玩家的出牌优先权
+        propriety[nextPlayerIndex] = true;
+    }
 }
 
 
