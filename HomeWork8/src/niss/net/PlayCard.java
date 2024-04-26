@@ -44,7 +44,7 @@ class Player {
 	private String playerName;
 	private ArrayList<Card> cards;
 	private int maxCardNumber;
-	private int handCardNumber;
+//	private int handCardNumber;
 	private int totalScore;
 	private int num1, num2, num3, num4;
 	// 两种构造函数
@@ -64,7 +64,6 @@ class Player {
 	}
 	// 统计玩家手中每种花色牌的数量
 	public void countTheNumberOfCardsInEachSuit() {
-		handCardNumber = cards.size();
 		for (Card card : cards) {
 			if (card.getSuit() == 1) num1++;
 			else if (card.getSuit() == 2) num2++;
@@ -124,7 +123,63 @@ class Player {
 	    
 	    return false;
 	}
+	
+	// 不考虑上家出牌方式 - 开局第一个出牌
+	public Card playingCard1() {
+        // 统计玩家手中每种花色的牌的数量
+        countTheNumberOfCardsInEachSuit();
+
+        // 找到剩余牌最多的花色
+        int maxSuit = 1; // 假设第一种花色是剩余牌最多的
+        int maxCount = num1; // 假设第一种花色牌的数量最多
+        if (num2 > maxCount) {
+            maxCount = num2;
+            maxSuit = 2;
+        }
+        if (num3 > maxCount) {
+            maxCount = num3;
+            maxSuit = 3;
+        }
+        if (num4 > maxCount) {
+            maxCount = num4;
+            maxSuit = 4;
+        }
+
+        // 找到剩余牌最多花色中数字最小的牌
+        Card minCard = null;
+        for (Card card : cards) {
+            if (card.getSuit() == maxSuit) {
+                if (minCard == null || card.getNumber() < minCard.getNumber()) {
+                    minCard = card;
+                }
+            }
+        }
+
+        // 如果找到了要出的牌
+        if (minCard != null) {
+            // 打印出牌信息
+            System.out.println("Player " + playerId + " plays: " + minCard);
+            
+            // 将这张牌从手牌中移除
+            cards.remove(minCard);
+            
+            // 更新相应花色的牌数量统计
+            if (maxSuit == 1) num1--;
+            else if (maxSuit == 2) num2--;
+            else if (maxSuit == 3) num3--;
+            else num4--;
+            
+            // 返回打出的牌
+            return minCard;
+        }
+        else {
+        	System.out.println("Player " + playerId + " Pass!"); 
+        	
+        	return null;
+        }
+    }
 }
+
 
 class PlayPork {
     private ArrayList<Card> cards;
