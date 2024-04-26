@@ -43,6 +43,7 @@ public class BuildHouse extends Panel
 
     public static void main(String[] args)
     {
+    	// 画房子
         Frame jp1 = new Frame("house");
         BuildHouse draw = new BuildHouse();
         jp1.add(draw, "Center");
