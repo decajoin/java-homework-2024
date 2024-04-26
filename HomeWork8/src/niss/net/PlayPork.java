@@ -127,9 +127,10 @@ public class PlayPork {
     	int currentPlayerIndex = getPlayerIndex(propriety);
     	
     	// 记录上一个出牌的人的编号
-    	int lastMaxPlayerIndex = currentPlayerIndex;
+    	int lastPlayerIndex = currentPlayerIndex;
     	
     	Player currentPlayer = players[currentPlayerIndex];
+    	// 第一个出牌，出牌方式1
     	lastcCard = currentPlayer.playingCard1();
     	currentPlayer.displayCards();
     	updatePropriety(currentPlayerIndex);
@@ -138,18 +139,18 @@ public class PlayPork {
     		currentPlayerIndex = getPlayerIndex(propriety);
     		currentPlayer = players[currentPlayerIndex];
     		
-    		Card tempCard = currentPlayer.playingCard2(lastcCard);
+    		Card tempCard = currentPlayer.playingCard2(lastcCard, lastPlayerIndex);
     		if (tempCard != null) {
     			lastcCard = tempCard;
-    			lastMaxPlayerIndex = currentPlayerIndex;
+    			lastPlayerIndex = currentPlayerIndex;
     		}
-    		else {
-    			if (currentPlayerIndex == lastMaxPlayerIndex) {
-    				lastcCard = currentPlayer.playingCard1();
-    				currentPlayer.displayCards();
-    				updatePropriety(currentPlayerIndex);
-    			}
-    		}
+//    		else {
+//    			if (currentPlayerIndex == lastPlayerIndex) {
+//    				lastcCard = currentPlayer.playingCard1();
+//    				currentPlayer.displayCards();
+//    				updatePropriety(currentPlayerIndex);
+//    			}
+//    		}
     		
     		currentPlayer.displayCards();
     		updatePropriety(currentPlayerIndex);

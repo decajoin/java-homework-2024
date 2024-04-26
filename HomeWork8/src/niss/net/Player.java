@@ -159,39 +159,71 @@ public class Player {
         return null;
     }
 
-	public Card playingCard2(Card lastCard) {
+	public Card playingCard2(Card lastCard, int lastPlayerIndex) {
 
 		// 不是第一次出牌，根据上家出的牌选择合适的牌进行出牌
         int lastCardSuit = lastCard.getSuit(); // 上家出的牌的花色
         int lastCardNumber = lastCard.getNumber(); // 上家出的牌的数字
-
-        // 寻找手中同花色的牌，并选择最小的牌出
-        Card minCard = null;
-        for (Card card : cards) {
-            if (card.getSuit() == lastCardSuit && card.getNumber() > lastCardNumber) {
-                if (minCard == null || card.getNumber() < minCard.getNumber()) {
-                    minCard = card;
+        
+        // 如果上一次出牌的不是本人
+        if (lastPlayerIndex != playerId) {
+        	// 寻找手中同花色的牌，并选择最小的牌出
+            Card minCard = null;
+            for (Card card : cards) {
+                if (card.getSuit() == lastCardSuit && card.getNumber() > lastCardNumber) {
+                    if (minCard == null || card.getNumber() < minCard.getNumber()) {
+                        minCard = card;
+                    }
                 }
             }
-        }
 
-        // 如果找到了要出的牌
-        if (minCard != null) {
-            // 打印出牌信息
-            System.out.println("Player " + playerId + " plays: " + minCard);
-            cards.remove(minCard); // 将选出的牌从手牌中移除
-            	
-            // 更新相应花色的牌数量统计
-            if (lastCardSuit == 1) num1--;
-            else if (lastCardSuit == 2) num2--;
-            else if (lastCardSuit == 3) num3--;
-            else num4--;
-            
-            return minCard;
-        } else {
-            // 如果没有找到符合规则的牌可出，则选择 PASS，表示放弃出牌
-            System.out.println("Player " + playerId + " Pass!");
-            return null;
+            // 如果找到了要出的牌
+            if (minCard != null) {
+                // 打印出牌信息
+                System.out.println("Player " + playerId + " plays: " + minCard);
+                cards.remove(minCard); // 将选出的牌从手牌中移除
+                	
+                // 更新相应花色的牌数量统计
+                if (lastCardSuit == 1) num1--;
+                else if (lastCardSuit == 2) num2--;
+                else if (lastCardSuit == 3) num3--;
+                else num4--;
+                
+                return minCard;
+            } else {
+                // 如果没有找到符合规则的牌可出，则选择 PASS，表示放弃出牌
+                System.out.println("Player " + playerId + " Pass!");
+                return null;
+            }
         }
+        else {
+        	// 寻找手中同花色的牌，并选择最小的牌出
+            Card minCard = null;
+            for (Card card : cards) {
+                if (card.getSuit() == lastCardSuit && card.getNumber() > lastCardNumber) {
+                    if (minCard == null || card.getNumber() < minCard.getNumber()) {
+                        minCard = card;
+                    }
+                }
+            }
+
+            // 如果找到了要出的牌
+            if (minCard != null) {
+                // 打印出牌信息
+                System.out.println("Player " + playerId + " plays: " + minCard);
+                cards.remove(minCard); // 将选出的牌从手牌中移除
+                	
+                // 更新相应花色的牌数量统计
+                if (lastCardSuit == 1) num1--;
+                else if (lastCardSuit == 2) num2--;
+                else if (lastCardSuit == 3) num3--;
+                else num4--;
+                
+                return minCard;
+            } else {
+                return playingCard1();
+            }
+        }
+        
 	}
 }
