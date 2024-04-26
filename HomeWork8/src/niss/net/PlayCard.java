@@ -1,5 +1,6 @@
 package niss.net;
 
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.*;
 
 import niss.xxx.Card;
@@ -43,24 +44,37 @@ class Player {
 	private int playerId;
 	private String playerName;
 	private ArrayList<Card> cards;
-	private int maxCardNumber;
-//	private int handCardNumber;
+	private int maxCardNumber = 13;
 	private int totalScore;
 	private int num1, num2, num3, num4;
 	// 两种构造函数
-	public Player(int playerId, String playerName, ArrayList<Card> cards, int maxCardNumber) {
+	public Player(int playerId, String playerName) {
 		super();
 		this.playerId = playerId;
 		this.playerName = playerName;
-		this.cards = cards;
-		this.maxCardNumber = maxCardNumber;
 	}
 	public Player() {
 		super();
 	}
 	
+	public int getTotalScore() {
+		return totalScore;
+	}
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
+	}
+	
+
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
+	}
+	
+	// 获得牌
 	public void takeACard(Card card) {
-		cards.add(card);
+		if (cards.size() <= maxCardNumber) {
+			cards.add(card);
+		}
+		
 	}
 	// 统计玩家手中每种花色牌的数量
 	public void countTheNumberOfCardsInEachSuit() {
@@ -71,6 +85,12 @@ class Player {
 			else num4++;
 		}
 	}
+
+	// 统计玩家手中所有牌的数量
+	public int countCards() {
+		return cards.size();
+	}
+	
 	// 整理牌方法1
 	public void organizeCardsBySuit() {
 	    ArrayList<Card> organizedCards = new ArrayList<>();
@@ -94,7 +114,7 @@ class Player {
 	
 	// 屏幕展示玩家手中所有的牌
 	public void displayCards() {
-	    System.out.println("Player " + playerId + ": " + playerName);
+	    System.out.print("Player " + playerId + ": " + playerName + " 剩下的牌有:");
 	    for (Card card : cards) {
 	        System.out.print(card + " ");
 	    }
@@ -172,30 +192,88 @@ class Player {
             // 返回打出的牌
             return minCard;
         }
-        else {
-        	System.out.println("Player " + playerId + " Pass!"); 
-        	
-        	return null;
-        }
+        return null;
     }
+
+	public Card playingCard2(Card lastCard) {
+
+		// 不是第一次出牌，根据上家出的牌选择合适的牌进行出牌
+        int lastCardSuit = lastCard.getSuit(); // 上家出的牌的花色
+        int lastCardNumber = lastCard.getNumber(); // 上家出的牌的数字
+
+        // 寻找手中同花色的牌，并选择最小的牌出
+        Card minCard = null;
+        for (Card card : cards) {
+            if (card.getSuit() == lastCardSuit && card.getNumber() > lastCardNumber) {
+                if (minCard == null || card.getNumber() < minCard.getNumber()) {
+                    minCard = card;
+                }
+            }
+        }
+
+        // 如果找到了要出的牌
+        if (minCard != null) {
+            // 打印出牌信息
+            System.out.println("Player " + playerId + " plays: " + minCard);
+            cards.remove(minCard); // 将选出的牌从手牌中移除
+            	
+            // 更新相应花色的牌数量统计
+            if (lastCardSuit == 1) num1--;
+            else if (lastCardSuit == 2) num2--;
+            else if (lastCardSuit == 3) num3--;
+            else num4--;
+            
+            return minCard;
+        } else {
+            // 如果没有找到符合规则的牌可出，则选择 PASS，表示放弃出牌
+            System.out.println("Player " + playerId + " Pass!");
+            return null;
+        }
+	}
 }
 
 
 class PlayPork {
-    private ArrayList<Card> cards;
-    private Player[] players;
-    private boolean[] propriety;
+    public ArrayList<Card> nowCards;
+    public Player[] players;
+    public boolean[] propriety;
 
     public PlayPork() {
-        // 初始化牌、玩家等
-        
+        // 初始化 players 数组
+        players = new Player[4];
+        players[0] = new Player(1, "小红");
+        players[1] = new Player(2, "小白");
+        players[2] = new Player(3, "小绿");
+        players[3] = new Player(4, "小青");
+
         // 初始化 propriety 数组
-        propriety = new boolean[players.length];
-        int firstPlayerIndex = new Random().nextInt(players.length);
+        propriety = new boolean[4];
+        int firstPlayerIndex = new Random().nextInt(4);
         propriety[firstPlayerIndex] = true;
+
+        // 初始化牌
+        nowCards = new ArrayList<>();
+        for (int suit = 1; suit <= 4; suit++) {
+            for (int number = 1; number <= 13; number++) {
+                nowCards.add(new Card(number, suit));
+            }
+        }
+
+        // 洗牌
+        shuffle();
+
+        // 发牌给每个玩家
+        dealCards();
     }
 
-    // 其他方法...
+    // 打印玩家出牌优先级顺序
+    public void printPropriety() {
+    	System.out.println("随机的出牌优先级是：");
+    	for (int i = 0; i < 4; i++) {
+    		if (propriety[i]) System.out.println("true " + (i + 1));
+    		else System.out.println("false " + (i + 1));
+    	}
+    }
 
     // 更新出牌优先权
     public void updatePropriety(int currentPlayerIndex) {
@@ -203,20 +281,122 @@ class PlayPork {
         propriety[currentPlayerIndex] = false;
         
         // 找到下一轮应该出牌的玩家的索引
-        int nextPlayerIndex = (currentPlayerIndex + 1) % players.length;
-        while (!players[nextPlayerIndex].hasValidMove(propriety)) {
-            nextPlayerIndex = (nextPlayerIndex + 1) % players.length;
-        }
-        
+        int nextPlayerIndex = (currentPlayerIndex + 1) % 4;
+
         // 更新下一轮出牌的玩家的出牌优先权
         propriety[nextPlayerIndex] = true;
+    }
+    
+    // 洗牌
+    public void shuffle() {
+        Collections.shuffle(nowCards);
+    }
+
+    // 发牌给每个玩家
+    private void dealCards() {
+        int cardIndex = 0;
+        for (int i = 0; i < 4; i++) {
+            ArrayList<Card> playerCards = new ArrayList<>();
+            for (int j = 0; j < 13; j++) {
+                playerCards.add(nowCards.get(cardIndex));
+                cardIndex++;
+            }
+            players[i].setCards(playerCards);
+        }
+    }
+    
+    // 判断这一局是否结束，只要有一个玩家手牌为0就结束
+    public boolean isOver() {
+    	for (int i = 0; i < 4; i++) {
+    		if (players[i].isTheCardCleared()) return true;
+    	}
+    	
+    	return false;
+    }
+    
+    // 计算每个玩家这回合的得分
+    public void calculate() {
+    	ArrayList<Integer> countPlayerCards = new ArrayList<Integer>();
+    	for (int i = 0; i < 4; i++) {
+    		countPlayerCards.add(players[i].countCards());
+    	}
+    	Collections.sort(countPlayerCards);
+    	for (int i = 0; i < 4; i++) {
+    		for (int j = 0; j < 4; j++) {
+    			if (players[j].countCards() == countPlayerCards.get(i)) {
+    				if (i == 0) {
+    					players[j].setTotalScore(5);
+    				}
+    				else if (i == 1) {
+    					players[j].setTotalScore(3);
+    				}
+    				else if (i == 2) {
+    					players[j].setTotalScore(2);
+    				}
+    				else players[j].setTotalScore(1);
+    			}
+    		}
+    	}
+    	
+    }
+    
+    // 由优先级数组得到现在该出牌的玩家号码
+    public int getPlayerIndex(boolean []propriety) {
+    	for (int i = 0; i < 4; i++) {
+    		if (propriety[i]) return i;
+    	}
+		return 0;
+    }
+    
+    // 开始玩一局
+    public void playAGame() {
+    	printPropriety();
+    	Card lastcCard = new Card();
+    	
+    	int currentPlayerIndex = getPlayerIndex(propriety);
+    	
+    	// 记录上一个出牌的人的编号
+    	int lastMaxPlayerIndex = currentPlayerIndex;
+    	
+    	Player currentPlayer = players[currentPlayerIndex];
+    	lastcCard = currentPlayer.playingCard1();
+    	currentPlayer.displayCards();
+    	updatePropriety(currentPlayerIndex);
+    	
+    	while (!isOver()) {
+    		currentPlayerIndex = getPlayerIndex(propriety);
+    		currentPlayer = players[currentPlayerIndex];
+    		
+    		Card tempCard = currentPlayer.playingCard2(lastcCard);
+    		if (tempCard != null) {
+    			lastcCard = tempCard;
+    			lastMaxPlayerIndex = currentPlayerIndex;
+    		}
+    		else {
+    			if (currentPlayerIndex == lastMaxPlayerIndex) {
+    				lastcCard = currentPlayer.playingCard1();
+    				currentPlayer.displayCards();
+    				updatePropriety(currentPlayerIndex);
+    			}
+    		}
+    		
+    		currentPlayer.displayCards();
+    		updatePropriety(currentPlayerIndex);
+    	}
+    	
+    	System.out.println("本轮游戏结束");
+    	
+    	calculate();
+    	
     }
 }
 
 
 public class PlayCard {
 	public static void main(String[] args) {
-		Card card = new Card(10, 1);
-		System.out.println(card.toString());
+	
+		PlayPork playPork = new PlayPork();
+		
+		playPork.playAGame();
 	}
 }
