@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import javax.security.auth.callback.ConfirmationCallback;
+
 public class PlayPork {
 	public ArrayList<Card> nowCards;
     public Player[] players;
@@ -39,10 +41,8 @@ public class PlayPork {
 
     // 打印玩家出牌优先级顺序
     public void printPropriety() {
-    	System.out.println("随机的出牌优先级是：");
     	for (int i = 0; i < 4; i++) {
-    		if (propriety[i]) System.out.println("true " + (i + 1));
-    		else System.out.println("false " + (i + 1));
+    		if (propriety[i]) System.out.println("获得首次出牌权的是 " + players[i]);
     	}
     }
 
@@ -118,6 +118,14 @@ public class PlayPork {
     	}
 		return 0;
     }
+     
+    // 打印本轮对局信息
+    public void printPlayPorkInfo() {
+    	for (int i = 0; i < 4; i++) {
+    		System.out.println(players[i]);
+    	}
+    }
+    
     
     // 开始玩一局
     public void playAGame() {
@@ -160,5 +168,6 @@ public class PlayPork {
     	
     	calculate();
     	
+    	printPlayPorkInfo();
     }
 }

@@ -166,7 +166,7 @@ public class Player {
         int lastCardNumber = lastCard.getNumber(); // 上家出的牌的数字
         
         // 如果上一次出牌的不是本人
-        if (lastPlayerIndex != playerId) {
+        if (lastPlayerIndex != playerId - 1) {
         	// 寻找手中同花色的牌，并选择最小的牌出
             Card minCard = null;
             for (Card card : cards) {
@@ -226,4 +226,10 @@ public class Player {
         }
         
 	}
+	@Override
+	public String toString() {
+		return "Player [playerId=" + playerId + ", playerName=" + playerName + ", totalScore=" + totalScore + "]";
+	}
+	
+	
 }
