@@ -148,17 +148,11 @@ public class PlayPork {
     		currentPlayer = players[currentPlayerIndex];
     		
     		Card tempCard = currentPlayer.playingCard2(lastcCard, lastPlayerIndex);
+    		// 只有返回的牌不为空，也就是说，有玩家出牌才更新
     		if (tempCard != null) {
     			lastcCard = tempCard;
     			lastPlayerIndex = currentPlayerIndex;
     		}
-//    		else {
-//    			if (currentPlayerIndex == lastPlayerIndex) {
-//    				lastcCard = currentPlayer.playingCard1();
-//    				currentPlayer.displayCards();
-//    				updatePropriety(currentPlayerIndex);
-//    			}
-//    		}
     		
     		currentPlayer.displayCards();
     		updatePropriety(currentPlayerIndex);

@@ -165,7 +165,7 @@ public class Player {
         int lastCardSuit = lastCard.getSuit(); // 上家出的牌的花色
         int lastCardNumber = lastCard.getNumber(); // 上家出的牌的数字
         
-        // 如果上一次出牌的不是本人
+        // 如果上一次出牌的不是本人，id是1，2，3，4所以要减一
         if (lastPlayerIndex != playerId - 1) {
         	// 寻找手中同花色的牌，并选择最小的牌出
             Card minCard = null;
