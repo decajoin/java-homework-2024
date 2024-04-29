@@ -11,6 +11,7 @@ public class PlayPork {
     public Player[] players;
     public boolean[] propriety;
 
+    // PlayPork构造函数，进行牌局的初始化
     public PlayPork() {
         // 初始化 players 数组
         players = new Player[4];
@@ -37,6 +38,11 @@ public class PlayPork {
 
         // 发牌给每个玩家
         dealCards();
+
+        // 每个玩家进行理牌，按花色大小进行理牌
+        for (int i = 0; i < 4; i++) {
+        	players[i].organizeCardsBySuit();
+        }
     }
 
     // 打印玩家出牌优先级顺序

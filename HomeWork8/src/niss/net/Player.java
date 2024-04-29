@@ -29,17 +29,18 @@ public class Player {
 	}
 	
 
+	// 一次性获得全部手牌
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
 	}
 	
 	// 获得牌
-	public void takeACard(Card card) {
-		if (cards.size() <= maxCardNumber) {
-			cards.add(card);
-		}
-		
-	}
+//	public void takeACard(Card card) {
+//		if (cards.size() <= maxCardNumber) {
+//			cards.add(card);
+//		}
+//		
+//	}
 	// 统计玩家手中每种花色牌的数量
 	public void countTheNumberOfCardsInEachSuit() {
 		for (Card card : cards) {
