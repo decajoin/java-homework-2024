@@ -29,17 +29,18 @@ public class Player {
 	}
 	
 
+	// 一次性获得全部手牌
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
 	}
 	
 	// 获得牌
-	public void takeACard(Card card) {
-		if (cards.size() <= maxCardNumber) {
-			cards.add(card);
-		}
-		
-	}
+//	public void takeACard(Card card) {
+//		if (cards.size() <= maxCardNumber) {
+//			cards.add(card);
+//		}
+//		
+//	}
 	// 统计玩家手中每种花色牌的数量
 	public void countTheNumberOfCardsInEachSuit() {
 		for (Card card : cards) {
@@ -165,7 +166,7 @@ public class Player {
         int lastCardSuit = lastCard.getSuit(); // 上家出的牌的花色
         int lastCardNumber = lastCard.getNumber(); // 上家出的牌的数字
         
-        // 如果上一次出牌的不是本人
+        // 如果上一次出牌的不是本人，id是1，2，3，4所以要减一
         if (lastPlayerIndex != playerId - 1) {
         	// 寻找手中同花色的牌，并选择最小的牌出
             Card minCard = null;
