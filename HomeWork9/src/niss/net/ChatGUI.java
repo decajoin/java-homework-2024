@@ -12,7 +12,7 @@ public class ChatGUI extends JFrame {
     private JButton sendButton;
 
     public ChatGUI() {
-        setTitle("ChatAI");
+        setTitle("ChatGUI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         chatArea = new JTextArea(10, 50);
