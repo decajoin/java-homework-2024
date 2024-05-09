@@ -62,6 +62,7 @@ public class ChatGUI extends JFrame {
         chatArea.append(text + "\n");
     }
 
+    // 点击提交按钮执行的逻辑
     private void submitInput() {
         String input = inputField.getText();
 

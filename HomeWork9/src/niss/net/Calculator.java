@@ -1,13 +1,13 @@
 package niss.net;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Calculator {
     private JFrame frame;
@@ -15,6 +15,7 @@ public class Calculator {
     private JTextField textField;
     private JButton[] numberButtons;
     private JButton addButton, subtractButton, multiplyButton, divideButton, equalsButton, clearButton;
+    private JButton sqrtButton, modulusButton;
 
     private String firstNumber;
     private String operator;
@@ -24,11 +25,13 @@ public class Calculator {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 4));
+        // 使用GirdLayout布局方式
+        panel.setLayout(new GridLayout(5, 4));
 
         textField = new JTextField();
         
         numberButtons = new JButton[10];
+        
         for (int i = 0; i < 10; i++) {
             numberButtons[i] = new JButton(String.valueOf(i));
             numberButtons[i].addActionListener(new NumberButtonListener());
@@ -40,6 +43,8 @@ public class Calculator {
         divideButton = new JButton("/");
         equalsButton = new JButton("=");
         clearButton = new JButton("C");
+        sqrtButton = new JButton("√");
+        modulusButton = new JButton("%");
 
         addButton.addActionListener(new OperatorButtonListener());
         subtractButton.addActionListener(new OperatorButtonListener());
@@ -47,8 +52,10 @@ public class Calculator {
         divideButton.addActionListener(new OperatorButtonListener());
         equalsButton.addActionListener(new EqualsButtonListener());
         clearButton.addActionListener(new ClearButtonListener());
+        sqrtButton.addActionListener(new FunctionButtonListener());
+        modulusButton.addActionListener(new OperatorButtonListener());
 
-        // 按JPanel的布局顺序加入(4 * 4)
+        // 按JPanel的布局顺序加入(5 * 4)
         panel.add(numberButtons[7]);
         panel.add(numberButtons[8]);
         panel.add(numberButtons[9]);
@@ -65,6 +72,8 @@ public class Calculator {
         panel.add(clearButton);
         panel.add(equalsButton);
         panel.add(divideButton);
+        panel.add(sqrtButton);
+        panel.add(modulusButton);
 
         frame.add(textField, BorderLayout.NORTH);
         frame.add(panel, BorderLayout.CENTER);
@@ -107,6 +116,8 @@ public class Calculator {
                 result = Double.parseDouble(firstNumber) * Double.parseDouble(secondNumber);
             } else if (operator.equals("/")) {
                 result = Double.parseDouble(firstNumber) / Double.parseDouble(secondNumber);
+            } else if (operator.equals("%")) {
+            	result = Double.parseDouble(firstNumber) % Double.parseDouble(secondNumber);
             }
 
             textField.setText(String.valueOf(result));
@@ -117,6 +128,22 @@ public class Calculator {
         @Override
         public void actionPerformed(ActionEvent e) {
             textField.setText("");
+        }
+    }
+
+    private class FunctionButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton button = (JButton) e.getSource();
+            String buttonText = button.getText();
+            double number = Double.parseDouble(textField.getText());
+            double result = 0.0;
+            
+            if (buttonText.equals("√")) {
+                result = Math.sqrt(number);
+            } 
+            
+            textField.setText(String.valueOf(result));
         }
     }
 
