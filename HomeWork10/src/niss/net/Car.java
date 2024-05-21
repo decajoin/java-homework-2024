@@ -22,20 +22,7 @@ public class Car {
 		}
 		this.fare = 0;
 	}
-	public Car(	String id,
-				String  it,
-				String  ot,
-				boolean mf,
-				float f){
-		this.CarID=id;
-		try{
-			this.InTime=df.parse(it);
-			this.OutTime=df.parse(ot);
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-		this.fare=f;
-	}
+	
 	public void setCarID(String id){
 		this.CarID=id;
 	}

@@ -139,8 +139,12 @@ public class CarOutJFrame extends JFrame implements ActionListener {
 					String str = Year + "-" + Month + "-" + Day + " " + Hour + ":" + Minute + ":" + Second;
 
 					// 补充
-					Car car = this.park.CarOut(park.GetCarID(parki), str);
-					CarOutSuccessJFrame cosjf = new CarOutSuccessJFrame(car, park.getEmptyNum());
+					
+					// 车辆出场
+					Car car = this.park.CarOut(parki, str);
+					// 得到停车场此时空闲车位数
+					int emptynum = park.getEmptyNum();
+					CarOutSuccessJFrame cosjf = new CarOutSuccessJFrame(car, emptynum);
 					MyJFrame mjf = new MyJFrame(park);
 
 					dispose();

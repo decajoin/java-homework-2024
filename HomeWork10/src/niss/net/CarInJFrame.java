@@ -134,6 +134,7 @@ public class CarInJFrame extends JFrame implements ActionListener {
 					Car car = new Car();
 					car.setInTime(str);
 					car.setCarID(jtfcarID.getText());
+					// 将car放入对应parki号停车位
 					this.park.CarIn(parki, car);
 					MyJFrame mjf = new MyJFrame(park);
 					CarInSuccessJFrame cisjf = new CarInSuccessJFrame(car.getCarID(), car.getInTime(), parki,
@@ -142,9 +143,12 @@ public class CarInJFrame extends JFrame implements ActionListener {
 					dispose();
 				}
 			} else {
+				// 如果入场时间输入错误，出现CarInFailureJFrame界面
 				CarInFailureJFrame cifjf = new CarInFailureJFrame();
 
 				// 补充
+				
+				// 并且将输入框中所有内容清除
 				this.jtfYear.setText("");
 				this.jtfMonth.setText("");
 				this.jtfDay.setText("");
@@ -155,6 +159,7 @@ public class CarInJFrame extends JFrame implements ActionListener {
 
 		}
 		if (e.getSource() == jbncancel) {
+			// 点击取消入场则返回主界面
 			MyJFrame mjf = new MyJFrame(park);
 			dispose();
 		}
