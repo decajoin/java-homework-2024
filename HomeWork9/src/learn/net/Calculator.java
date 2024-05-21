@@ -182,7 +182,7 @@ public class Calculator extends JFrame implements ActionListener {
 			restext = restext.substring(0, reslen - 1);
 			distext = distext.substring(0, dislen - 1);
 			if (restext.length() == 0) {
-				displayText.setText("0");
+				displayText.setText("");
 				resultText.setText("0");
 				firstDigit = true;
 			} else {
@@ -197,7 +197,7 @@ public class Calculator extends JFrame implements ActionListener {
 	 */
 	private void handleC() {
 		// 初始化
-		displayText.setText("0");
+		displayText.setText("");
 		resultText.setText("0");
 		resultNum = 0.0;
 		firstDigit = true;
