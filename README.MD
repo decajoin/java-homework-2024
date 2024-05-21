@@ -6,7 +6,8 @@
 
 - [x] 第7次实验作业
 - [x] 第8次实验作业
-- [ ] 第9次实验作业
+- [x] 第9次实验作业
+- [ ] 第10次实验作业
 
 ## 第5次实验
 
@@ -53,4 +54,24 @@
 ### 代码执行结果
 
 ![运行结果演示](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C%E6%BC%94%E7%A4%BA.gif)
+
+## 第9次实验
+
+### 题目
+
+![image-20240521162223504](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/image-20240521162223504.png)
+
+### 代码执行结果
+
+![PixPin_2024-05-21_16-31-57](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/PixPin_2024-05-21_16-31-57.gif)
+
+## 第10次实验
+
+### 题目
+
+
+
+### 代码执行结果
+
+
 
