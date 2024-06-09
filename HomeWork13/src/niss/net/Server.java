@@ -22,6 +22,7 @@ public class Server {
 		clientSocket = serverSocket.accept();
 		out = new ObjectOutputStream(clientSocket.getOutputStream());
 		in = new ObjectInputStream(clientSocket.getInputStream());
+		// 相当于一个监听程序，while(true)一直监听有没有收到信息
 		while (true) {
 			Information info = (Information) in.readObject();
 			frame.displayMessage(info);

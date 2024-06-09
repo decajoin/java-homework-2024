@@ -33,10 +33,13 @@ public class ServerFrame extends JFrame {
         add(new JScrollPane(displayArea), BorderLayout.CENTER);
         add(panel, BorderLayout.SOUTH);
 
-        sendButton.addActionListener(new ActionListener() {
+        // 定义一个监听器
+        ActionListener sendActionListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // 获得文本框输入的信息
                 String message = inputField.getText();
                 try {
+                	// 发送信息
                     server.sendMessage(new Information("Server", "Client", message));
                     displayMessage(new Information("Server", "Client", message));
                 } catch (IOException ex) {
@@ -44,7 +47,13 @@ public class ServerFrame extends JFrame {
                 }
                 inputField.setText("");
             }
-        });
+        };
+
+        
+        sendButton.addActionListener(sendActionListener);
+
+        
+        inputField.addActionListener(sendActionListener);
 
         setTitle("Server Chat");
         setSize(400, 300);

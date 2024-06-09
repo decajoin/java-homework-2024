@@ -22,6 +22,7 @@ public class Client {
 		out.writeObject(info);
 	}
 
+	// 相当于一个监听程序，while(true)一直监听有没有收到信息
 	public void receiveMessage() throws IOException, ClassNotFoundException {
 		while (true) {
 			Information info = (Information) in.readObject();
