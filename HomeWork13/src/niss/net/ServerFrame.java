@@ -1,10 +1,6 @@
 package niss.net;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -33,27 +29,10 @@ public class ServerFrame extends JFrame {
         add(new JScrollPane(displayArea), BorderLayout.CENTER);
         add(panel, BorderLayout.SOUTH);
 
-        // 定义一个监听器
-        ActionListener sendActionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // 获得文本框输入的信息
-                String message = inputField.getText();
-                try {
-                	// 发送信息
-                    server.sendMessage(new Information("Server", "Client", message));
-                    displayMessage(new Information("Server", "Client", message));
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                inputField.setText("");
-            }
-        };
-
-        
-        sendButton.addActionListener(sendActionListener);
-
-        
-        inputField.addActionListener(sendActionListener);
+        // 创建send按键监听器
+        ChatListener listener = new ChatListener(server);
+        sendButton.addActionListener(listener);
+        inputField.addActionListener(listener);
 
         setTitle("Server Chat");
         setSize(400, 300);
@@ -63,5 +42,9 @@ public class ServerFrame extends JFrame {
 
     public void displayMessage(Information info) {
         displayArea.append(info.getFromUser() + ": " + info.getMessage() + "\n");
+    }
+
+    public JTextField getInputField() {
+        return inputField;
     }
 }
