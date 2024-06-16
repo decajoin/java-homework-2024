@@ -10,7 +10,7 @@
 - [x] 第10次实验作业
 - [x] 第11次实验作业
 - [x] 第12次实验作业
-- [ ] 第13次实验作业
+- [x] 第13次实验作业
 
 ## 第5次实验
 
@@ -221,3 +221,29 @@ public class SimpleServer {
 ### 代码执行结果
 
 ![PixPin_2024-06-01_11-24-31](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/PixPin_2024-06-01_11-24-31.gif)
+
+## 第13次实验
+
+### 题目
+
+![image-20240616113532893](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/image-20240616113532893.png)
+
+![image-20240616113553964](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/image-20240616113553964.png)
+
+![image-20240616113613024](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/image-20240616113613024.png)
+
+### 代码执行结果
+
+> 只实现了阶段2......
+
+![image-20240616113753012](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/image-20240616113753012.png)
+
+
+
+
+
+
+
+
+
+**完结撒花~~**
