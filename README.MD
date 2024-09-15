@@ -112,7 +112,7 @@
 
 ### 代码执行结果2
 
-![PixPin_2024-06-01_11-18-34](D:\Code\ecilpse-code\JavaHomeWork\HomeWork11\src\代码运行结果.gif)
+![PixPin_2024-09-15_16-50-06](https://yeyi0003.oss-cn-hangzhou.aliyuncs.com/PixPin_2024-09-15_16-50-06.gif)
 
 
 
@@ -250,6 +250,6 @@ public class SimpleServer {
 
 没做，没仔细看
 
-
+**实验课成绩：90**
 
 **完结撒花~~**
